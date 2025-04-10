@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# 更新系统和安装依赖
+sudo su -y
+sudo apt update -y
+sudo apt install -y screen
+
+# 返回主目录
+# cd ~
+
+#下载程序
+wget https://github.com/doktor83/SRBMiner-Multi/releases/download/2.8.1/SRBMiner-Multi-2-8-1-Linux.tar.gz
+
+#解压程序
+tar -xzvf SRBMiner-Multi-2-8-1-Linux.tar.gz
+
+#去SRBMiner文件下
+cd SRBMiner-Multi-2-8-1
+
+# 创建快捷启动脚本
+cat <<'EOF' > start
+#!/bin/bash
+
+# 生成随机矿工名
+WORKER_NAME="cloud_$(date +%s)_$RANDOM"
+
+# 创建并启动一个新的 screen 会话，执行挖矿程序
+screen -dmS ${WORKER_NAME} ./SRBMiner-MULTI --algorithm randomx --pool stratum+ssl://rx.unmineable.com:443 --wallet USDT:TGpiKru64ovzRMeBVTNgDDC5fakbDVU9Qk.${WORKER_NAME}#pblk-utjn --proxy 50.63.12.101:61120
+# 输出通知
+
+echo "你可以通过 'screen -r ${WORKER_NAME}' 来查看日志。"
+EOF
+
+# 设置执行权限
+chmod +x start
+
+# 启动脚本
+./start
+
+# 完成通知
+echo "SRBMiner 编译完成并已在后台运行！"
