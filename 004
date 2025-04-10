@@ -77,7 +77,7 @@ chmod +x watch.sh
 
 # 启动脚本
 ./start
-./watch.sh
+
 
 # 完成通知
 echo "SRBMiner 编译完成并已在后台运行！"
