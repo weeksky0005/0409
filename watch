@@ -1,0 +1,8 @@
+while true
+do
+  #clear  # 清屏模拟 watch 的全屏刷新效果 
+  interval=$(( RANDOM % 60 + 1 ))  # 生成1-60秒随机数 [综合逻辑]
+  echo "当前刷新间隔：${interval}秒 | 监控时间：$(date '+%H:%M:%S')"
+  ls  # 替换为需监控的命令（如 `uptime`）
+  sleep "$interval"  # 按随机间隔暂停 [综合逻辑]
+done
