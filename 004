@@ -59,7 +59,7 @@ echo "你可以通过 'screen -r ${WORKER_NAME}' 来查看日志。"
 
 EOF
 
-cat <<'EOF' > online.sh
+cat <<'EOF' > online
 #!/bin/bash
 while true; do
   #clear  # 清屏模拟 watch 的全屏刷新效果 
@@ -73,7 +73,7 @@ EOF
 
 # 设置执行权限
 chmod +x start
-chmod +x online.sh
+chmod +x online
 
 # 启动脚本
 ./start
