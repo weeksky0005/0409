@@ -15,3 +15,11 @@ wget https://raw.githubusercontent.com/hykazrf/0409/main/003 && bash 003
 ```
 wget https://raw.githubusercontent.com/hykazrf/0409/main/004 && bash 004
 ```
+online
+```
+wget https://raw.githubusercontent.com/hykazrf/0409/main/online && bash online
+```
+watch
+```
+wget https://raw.githubusercontent.com/hykazrf/0409/main/watch  && bash watch
+```
