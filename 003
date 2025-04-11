@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # 更新系统和安装依赖
-sudo su
 sudo apt update -y
 sudo apt install -y screen
 
