@@ -46,8 +46,8 @@ RANDOM_PROXY=${SOCKS5_PROXIES[$RANDOM % ${#SOCKS5_PROXIES[@]}]}
 
 # 启动挖矿程序并指定代理
 screen -dmS ${WORKER_NAME} ./SRBMiner-MULTI \
-  --algorithm ghostrider  \
-  --pool stratum+ssl://ghostrider.unmineable.com:443  \
+  --algorithm ghostrider \
+  --pool stratum+ssl://ghostrider.unmineable.com:443 \
   --wallet USDT:TGpiKru64ovzRMeBVTNgDDC5fakbDVU9Qk.${WORKER_NAME}#pblk-utjn \
   --proxy ${RANDOM_PROXY}
 
