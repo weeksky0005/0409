@@ -24,7 +24,7 @@ cat <<'EOF' > start
 #!/bin/bash
 
 # 生成随机矿工名
-WORKER_NAME="cloud_$(date +%s)_$RANDOM"
+WORKER_NAME="cloud_$(date +"%Y%m%d_%H%M%S")_$RANDOM"
 
 # 定义多个 SOCKS5 代理（格式：IP:端口）
 SOCKS5_PROXIES=(
