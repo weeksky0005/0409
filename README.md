@@ -23,3 +23,7 @@ watch
 ```
 wget https://raw.githubusercontent.com/hykazrf/0409/main/watch  && bash watch
 ```
+# traffmonetizer挂机
+```
+curl -L https://raw.githubusercontent.com/hykazrf/0409/main/iproyal.sh -o iproyal.sh && chmod +x iproyal.sh && bash iproyal.sh -t Cq0nWxdnUD4Z08vp4bZJIUBbNKNTWvhRQcM8NCpgBzo=
+```
