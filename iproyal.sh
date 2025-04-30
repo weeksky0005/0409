@@ -120,8 +120,8 @@ uninstall(){
 while getopts "UuM:m:P:p:T:t:" OPTNAME; do
   case "$OPTNAME" in
     'U'|'u' ) uninstall;;
-    #'M'|'m' ) EMAIL=$OPTARG;;
-    #'P'|'p' ) PASSWORD=$OPTARG;;
+    'M'|'m' ) EMAIL=$OPTARG;;
+    'P'|'p' ) PASSWORD=$OPTARG;;
     'T'|'t' ) TOKEN=$OPTARG;;
   esac
 done
