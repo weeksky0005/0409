@@ -95,7 +95,7 @@ container_build(){
   rname=${ori: 2: 9}
    docker pull traffmonetizer/cli_v2
 #  docker pull iproyal/pawns-cli:latest
-    docker run -d --restart always --name "$NAME" traffmonetizer/cli_v2 start accept --token "$TOKEN" >/dev/null 2>&1
+    docker run -d --restart=always --name "$NAME" traffmonetizer/cli_v2 start accept -token="$TOKEN" >/dev/null 2>&1
 #   docker run -d --name "$NAME" --restart=always iproyal/pawns-cli:latest -email="$EMAIL" -password="$PASSWORD" -device-name=raspberrypi -device-id="$rname" -accept-tos >/dev/null 2>&1
 #   docker run -d --name "$NAME" --restart=always iproyal/pawns-cli:latest -email="$EMAIL" -password="$PASSWORD" -device-name=raspberrypi -accept-tos >/dev/null 2>&1
   
