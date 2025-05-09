@@ -56,7 +56,9 @@ docker run -d \
   --security-opt seccomp=unconfined `#optional` \
   -e PUID=1000 \
   -e PGID=1000 \
-  -e TZ=Etc/UTC \
+  -e TZ=Asia/Shanghai \
+  -e LANG=zh_CN.UTF-8 \
+  -e ENABLE_CJK_FONT=1 \
   -e CHROME_CLI=https://www.cloudstudio.net/ `#optional` \
   -p 3000:3000 \
   -p 3001:3001 \
