@@ -10,9 +10,9 @@ RESET="\033[0m"
 # 检测是否具有 root 权限
 [[ $EUID -ne 0 ]] && echo -e "${RED}错误: 请先运行 sudo -i 获取 root 权限后再执行此脚本${RESET}" && exit 1
 
-# 设置 Ngrok 隧道和 Docker Chromium 的脚本
+# 设置 Ngrok 隧道和 Docker Firefox 的脚本
 
-echo -e "${GREEN}===== 开始设置 Ngrok 隧道和 Docker Chromium =====${RESET}"
+echo -e "${GREEN}===== 开始设置 Ngrok 隧道和 Docker Firefox =====${RESET}"
 echo -e "${RED}重要提示: ${BLUE}此保活方法最长持续时间为24小时${RESET}"
 echo ""
 
@@ -45,30 +45,26 @@ echo -e "${YELLOW}[2/4] 正在设置 Docker 和 Firefox 容器...${RESET}"
 systemctl unmask docker docker.socket containerd 2>/dev/null || true
 systemctl start docker 2>/dev/null || true
 
-# 创建 Chromium 数据目录
-mkdir -p ~/chromium-data
+# 创建 Firefox 数据目录
+mkdir -p ~/firefox-data
 
-# 运行 Chromium 容器
-echo -e "${YELLOW}正在启动 Chromium 容器...${RESET}"
-docker rm -f Chromium 2>/dev/null || true
+# 运行 Firefox 容器
+echo -e "${YELLOW}正在启动 Firefox 容器...${RESET}"
+docker rm -f firefox 2>/dev/null || true
 docker run -d \
-  --name=chromium \
-  --security-opt seccomp=unconfined `#optional` \
-  -e PUID=1000 \
-  -e PGID=1000 \
+  --name firefox \
+  -p 5800:5800 \
+  -v ~/firefox-data:/config:rw \
+  -e FF_OPEN_URL=https://cloudstudio.net/ \
   -e TZ=Asia/Shanghai \
   -e LANG=zh_CN.UTF-8 \
-  -e CHROME_CLI=https://www.cloudstudio.net/ `#optional` \
-  -p 3000:3000 \
-  -p 3001:3001 \
-  -v /path/to/config:/config \
-  --shm-size="1gb" \
+  -e ENABLE_CJK_FONT=1 \
   --restart unless-stopped \
-  lscr.io/linuxserver/chromium:latest
+  jlesage/firefox
 
 # 检查容器是否成功启动
-if ! docker ps | grep -q chromium; then
-  echo -e "${RED}错误: Chromium 容器启动失败，请检查 Docker 是否正常运行${RESET}"
+if ! docker ps | grep -q firefox; then
+  echo -e "${RED}错误: Firefox 容器启动失败，请检查 Docker 是否正常运行${RESET}"
   exit 1
 fi
 
@@ -87,8 +83,8 @@ while nc -z localhost $NGROK_API_PORT 2>/dev/null; do
 done
 
 # 使用 nohup 在后台运行 ngrok
-pkill -f "ngrok http 3000 --name chromium" >/dev/null 2>&1 || true
-nohup /usr/local/bin/ngrok http 3000 --name chromium --authtoken=${NGROK_TOKEN} >/dev/null 2>&1 &
+pkill -f "ngrok http 5800 --name firefox" >/dev/null 2>&1 || true
+nohup /usr/local/bin/ngrok http 5800 --name firefox --authtoken=${NGROK_TOKEN} >/dev/null 2>&1 &
 
 echo -e "${YELLOW}[4/4] 等待 Ngrok 服务启动...${RESET}"
 sleep 5
@@ -101,10 +97,10 @@ NGROK_URL=$(echo $NGROK_INFO | grep -o '"public_url":"[^"]*"' | grep -o 'https:/
 
 echo -e "${GREEN}===== 设置完成 =====${RESET}"
 echo ""
-echo -e "${GREEN}Chromium 本地访问地址: ${RESET}http://localhost:3000"
-echo -e "${GREEN}Chromium Ngrok 访问地址: ${RESET}$NGROK_URL"
+echo -e "${GREEN}Firefox 本地访问地址: ${RESET}http://localhost:5800"
+echo -e "${GREEN}Firefox Ngrok 访问地址: ${RESET}$NGROK_URL"
 echo ""
 echo -e "${YELLOW}注意: Docker 容器设置为自动重启，除非手动停止${RESET}"
-echo -e "${YELLOW}注意: Ngrok 进程在后台运行，如需停止请使用 'pkill -f \"ngrok http 3000 --name chromium\"' 命令${RESET}"
-echo -e "${YELLOW}注意: 这是一个 CLOUDSTUDIO 保活方案，请确保定期访问以保持活跃状态${RESET}"
+echo -e "${YELLOW}注意: Ngrok 进程在后台运行，如需停止请使用 'pkill -f \"ngrok http 5800 --name firefox\"' 命令${RESET}"
+echo -e "${YELLOW}注意: 这是一个 IDX 保活方案，请确保定期访问以保持活跃状态${RESET}"
 echo ""
