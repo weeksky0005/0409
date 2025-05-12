@@ -54,11 +54,11 @@ docker rm -f mullvad-browser 2>/dev/null || true
 docker run -d \
   --name=mullvad-browser \
   --cap-add=NET_ADMIN \
-  --security-opt seccomp=unconfined `#optional` \
+  --security-opt seccomp=unconfined  \
   -e PUID=1000 \
   -e PGID=1000 \
   -e TZ=Etc/UTC \
-  -e LOCAL_NET=192.168.0.0/16 `#optional` \
+  -e LOCAL_NET=https://cloudstudio.net  \
   -p 3000:5800 \
   -p 3001:3001 \
   -v /path/to/mullvad-browser/config:/config \
