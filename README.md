@@ -32,3 +32,7 @@ curl -L https://raw.githubusercontent.com/hykazrf/0409/main/iproyal.sh -o iproya
 ```
 bash <(wget -qO- https://raw.githubusercontent.com/hykazrf/0409/main/alive.sh)
 ```
+# 保活代码，mullvad浏览器
+```
+bash <(wget -qO- https://raw.githubusercontent.com/hykazrf/0409/main/browser.sh)
+```
