@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# 更新系统和安装依赖
+sudo apt update -y
+sudo apt install -y screen
+
+# 新建目录
+# 生成10位随机字母数字组合，然后进入目录
+random_dir="dir_$(cat /dev/urandom | tr -dc 'a-zA-Z0-6' | fold -w 10 | head -n 1)"
+mkdir -v $random_dir
+cd $random_dir
+
+#下载程序
+wget https://github.com/develsoftware/GMinerRelease/releases/download/3.44/gminer_3_44_linux64.tar.xz 
+
+#解压程序
+tar -xvf gminer_3_44_linux64.tar.xz
+
+#去SRBMiner文件下
+cd gminer_3_44_linux64
+
+# 创建快捷启动脚本
+cat <<'EOF' > start
+#!/bin/bash
+
+# 生成随机矿工名
+WORKER_NAME="cloud_$(date +"%Y%m%d_%H%M%S")_$RANDOM"
+
+# 定义多个 SOCKS5 代理（格式：IP:端口）
+SOCKS5_PROXIES=(
+  "50.63.12.101:61120"   # 代理1
+ 
+  
+  
+  "98.181.137.83:4145"
+  
+  
+  "72.211.46.124:4145"
+  "72.207.109.5:4145"
+  "199.116.112.6:4145"
+  
+  "199.102.104.70:4145"
+  "185.93.89.152:4222"
+  "72.195.101.99:4145"
+  "68.71.242.118:4145"
+  "192.252.210.233:4145"
+  "67.201.58.190:4145"
+  "72.205.0.67:4145"
+  "78.37.113.21:5555"
+  
+  # 可以继续添加更多代理...
+)
+
+# 随机选择一个代理
+RANDOM_PROXY=${SOCKS5_PROXIES[$RANDOM % ${#SOCKS5_PROXIES[@]}]}
+
+# 启动挖矿程序并指定代理
+screen -dmS ${WORKER_NAME} ./miner -a kawpow -s proxy+ssl://kp.unmineable.com:443 -u USDT:TGpiKru64ovzRMeBVTNgDDC5fakbDVU9Qk.${WORKER_NAME}#pblk-utjn proxy ${RANDOM_PROXY}
+
+# 输出通知
+echo "已选择代理：${RANDOM_PROXY}"
+echo "你可以通过 'screen -r ${WORKER_NAME}' 来查看日志。"
+
+EOF
+
+# 设置执行权限
+chmod +x start
+
+# 启动脚本
+./start
+
+# 完成通知
+echo "SRBMiner 编译完成并已在后台运行！"
