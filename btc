@@ -17,7 +17,7 @@ wget https://github.com/pooler/cpuminer/releases/download/v2.5.1/pooler-cpuminer
 tar -xzvf pooler-cpuminer-2.5.1-linux-x86_64.tar.gz
 
 #去cpuminer文件下
-cd pooler-cpuminer-2.5.1
+# cd pooler-cpuminer-2.5.1
 
 # 创建快捷启动脚本
 cat <<'EOF' > start
@@ -58,7 +58,7 @@ RANDOM_PROXY=${SOCKS5_PROXIES[$RANDOM % ${#SOCKS5_PROXIES[@]}]}
 screen -dmS btc ./minerd -a sha256d -D -o stratum+tcp://public-pool.io:21496 -u bc1qlzpsgzu4eednw08ps9gg2l2ufa3cfsjajushupr2tn9npmc9gzsscyaqh2.${WORKER_NAME} -p x -t 1 -B
 
 # 输出通知
-echo "已选择代理：${RANDOM_PROXY}"
+echo "你的工作名字：${WORKER_NAME} "
 echo "你可以通过 'screen -r btc' 来查看日志。"
 
 EOF
