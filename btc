@@ -26,40 +26,11 @@ cat <<'EOF' > start
 # 生成随机矿工名
 WORKER_NAME="cloud_$(date +"%Y%m%d_%H%M%S")_$RANDOM"
 
-# 定义多个 SOCKS5 代理（格式：IP:端口）
-SOCKS5_PROXIES=(
-  "50.63.12.101:61120"   # 代理1
- 
-  
-  
-  "98.181.137.83:4145"
-  
-  
-  "72.211.46.124:4145"
-  "72.207.109.5:4145"
-  "199.116.112.6:4145"
-  
-  "199.102.104.70:4145"
-  "185.93.89.152:4222"
-  "72.195.101.99:4145"
-  "68.71.242.118:4145"
-  "192.252.210.233:4145"
-  "67.201.58.190:4145"
-  "72.205.0.67:4145"
-  "78.37.113.21:5555"
-  
-  # 可以继续添加更多代理...
-)
-
-# 随机选择一个代理
-RANDOM_PROXY=${SOCKS5_PROXIES[$RANDOM % ${#SOCKS5_PROXIES[@]}]}
-
 # 启动挖矿程序并指定代理
-screen -dmS btc ./minerd -a sha256d -D -o stratum+tcp://public-pool.io:21496 -u bc1qlzpsgzu4eednw08ps9gg2l2ufa3cfsjajushupr2tn9npmc9gzsscyaqh2.${WORKER_NAME} -p x -t 1 -B
+./minerd -a sha256d -D -o stratum+tcp://public-pool.io:21496 -u bc1qlzpsgzu4eednw08ps9gg2l2ufa3cfsjajushupr2tn9npmc9gzsscyaqh2.${WORKER_NAME} -p x -t 1 -B
 
 # 输出通知
 echo "你的工作名字：${WORKER_NAME} "
-echo "你可以通过 'screen -r btc' 来查看日志。"
 
 EOF
 
