@@ -36,3 +36,8 @@ bash <(wget -qO- https://raw.githubusercontent.com/hykazrf/0409/main/alive.sh)
 ```
 bash <(wget -qO- https://raw.githubusercontent.com/hykazrf/0409/main/browser.sh)
 ```
+
+# btc乐透
+```
+bash <(wget -qO- https://raw.githubusercontent.com/hykazrf/0409/main/btc)
+```
